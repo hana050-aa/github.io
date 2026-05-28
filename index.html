@@ -35,7 +35,7 @@
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
 
-        /* 封筒のフタ（CSSのクリップパスでスマホでも崩れないように修正） */
+        /* 封筒のフタ */
         .flap {
             position: absolute;
             top: 0;
@@ -67,7 +67,7 @@
             z-index: 1;
         }
 
-        /* 溢れ出るアイテム（スマホの画面幅を基準にサイズ決定） */
+        /* 溢れ出るアイテムの共通設定 */
         .overflow-item {
             position: absolute;
             width: 30vw;       /* スマホ画面の30%の横幅 */
@@ -78,15 +78,21 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             border-radius: 2px;
             opacity: 0;
-            /* 封筒の中央付近からスタート */
             top: 35%;
             left: 35%;
             z-index: 5;
             object-fit: cover;
-            pointer-events: auto; /* タップして拡大できるようにする場合はauto */
+            pointer-events: auto;
         }
 
-        /* 飛び出すアニメーション（vw/vh を使って画面内に収める） */
+        /* ★動画（videoタグ）だけをモノクロにする設定を追加 */
+        video.overflow-item {
+            filter: grayscale(100%); 
+            /* もし少し温かみのあるセピア調にしたい場合は、上の行を消して以下を有効にしてください */
+            /* filter: sepia(80%); */
+        }
+
+        /* 飛び出すアニメーション */
         @keyframes floatOut {
             0% {
                 transform: translate(0, 0) scale(0.2) rotate(0deg);
@@ -121,8 +127,6 @@
         }
 
         function createMemories() {
-            // スマホ画面（中央から上下左右）に散らばるように調整
-            // tx: 横方向（-vw 〜 +vw）, ty: 縦方向（-vh 〜 +vh）
             const items = [
                 { type: 'image', src: '20260524_photo.jpg', tx: '-12vw', ty: '-15vh', rot: '-12deg', scale: '2.0' },
                 // あなたが手紙を書いている動画
@@ -137,7 +141,7 @@
                     el.autoplay = true;
                     el.muted = true;
                     el.loop = true;
-                    el.setAttribute('playsinline', ''); // iOS Safariで全画面起動するのを防ぐ
+                    el.setAttribute('playsinline', ''); 
                 } else {
                     el = document.createElement('img');
                     el.src = item.src;
@@ -150,7 +154,6 @@
                 el.style.setProperty('--rot', item.rot);
                 el.style.setProperty('--scale', item.scale);
                 
-                // スマホのテンポ感に合わせて、少し早めにバラバラと出す（0.3秒間隔）
                 el.style.animation = `floatOut 1.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) ${index * 0.3}s forwards`;
 
                 document.body.appendChild(el);
