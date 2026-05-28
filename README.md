@@ -1,16 +1,5 @@
 <!DOCTYPE html>
 <html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>思い出の手紙 (スマホ版)</title>
-    <style>
-        :root {
-            --bg-color: #f4efe6;
-            --envelope-color: #d4a373;
-            --envelope-inside: #faedcd;
-        }
-
         body {
             margin: 0;
             padding: 0;
