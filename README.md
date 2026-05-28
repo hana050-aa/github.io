@@ -1,4 +1,3 @@
-# github.io
 <!DOCTYPE html>
 <html lang="ja">
 <head>
